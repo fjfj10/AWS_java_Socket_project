@@ -1,6 +1,7 @@
 package socket_project_client;
 import java.awt.CardLayout;
 import java.awt.EventQueue;
+import java.awt.Label;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -28,6 +29,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JLabel;
 
 @Getter
 public class ProjectClient extends JFrame {
@@ -59,6 +61,9 @@ public class ProjectClient extends JFrame {
 	private JScrollPane userListScrollPane;
 	private DefaultListModel<String> userListModel;
 	private JList userList;
+	private JButton ExitButton;
+	private JLabel SendListLabel;
+	private JLabel ClientNameLabel;
 			
 
 	/*GUIClient 생성*/
@@ -104,19 +109,20 @@ public class ProjectClient extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 286);
 
-		//카드레이아웃을 사용하는 패널 생성
+		/*<<카드레이아웃을 사용하는 패널 생성>>*/
 		mainCardLayout = new CardLayout();
 		mainCardPanel = new JPanel();
 		mainCardPanel.setLayout(mainCardLayout);
 		setContentPane(mainCardPanel);
 		
+		/*<<roomList를 표시하는 패널>>*/
 		chattingRoomListPanel = new JPanel();
 		chattingRoomListPanel.setLayout(null);
 		chattingRoomListPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainCardPanel.add(chattingRoomListPanel, "chattingRoomListPanel");
-		
+		/*<createRoomButton>*/
 		JButton createRoomButton = new JButton("방만들기");
 		createRoomButton.setBounds(10, 10, 100, 30);
 		createRoomButton.addMouseListener(new MouseAdapter() {
@@ -137,9 +143,7 @@ public class ProjectClient extends JFrame {
 						return;
 					}
 				}
-				// RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("createRoom", null);
-				// => nullexception발생 :  ConnectedSocket에서 case "createRoom"이 실행될 때 roomName에 null 이들어가 생성불가
-				// 잘 돌아가는지 확인 하려면 Println으로 호출이 되는지 변수에 잘 들어갔는지 등등 확인 가능
+				/**/
 				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("createRoom", roomName);
 				ClientSender.getInstance().send(requestBodyDto);
 				mainCardLayout.show(mainCardPanel, "chattingRoomPanel");
@@ -149,11 +153,11 @@ public class ProjectClient extends JFrame {
 		});
 		chattingRoomListPanel.add(createRoomButton);
 		
-		
+		/*<roomList가 표시되는 곳>*/
 		roomListScrollPanel = new JScrollPane();
 		roomListScrollPanel.setBounds(10, 50, 414, 201);
 		chattingRoomListPanel.add(roomListScrollPanel);
-		
+		/*더블클릭했을때 방으로 입장하는 기능*/
 		roomListModel = new DefaultListModel<String>();
 		roomList = new JList(roomListModel);
 		roomList.addMouseListener(new MouseAdapter() {
@@ -168,6 +172,13 @@ public class ProjectClient extends JFrame {
 			}
 		});
 		roomListScrollPanel.setViewportView(roomList);
+		/*Label에 Client 본인의 접속표시, 이름표시*/
+		ClientNameLabel = new JLabel();
+		ClientNameLabel.setText("<< 접속자: "+ username + " >>");
+		ClientNameLabel.setBounds(116, 10, 158, 30);
+		chattingRoomListPanel.add(ClientNameLabel);
+		
+		
 		
 		chattingRoomPanel = new JPanel();
 		chattingRoomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -197,13 +208,13 @@ public class ProjectClient extends JFrame {
 				}
 			}
 		});
-		messageTextField.setBounds(12, 208, 410, 31);
+		messageTextField.setBounds(68, 208, 354, 31);
 		chattingRoomPanel.add(messageTextField);
 		messageTextField.setColumns(10);
 		
 		/*<<접속자 목록 표시>>*/
 		userListScrollPane = new JScrollPane();
-		userListScrollPane.setBounds(322, 10, 100, 188);
+		userListScrollPane.setBounds(322, 50, 100, 148);
 		chattingRoomPanel.add(userListScrollPane);
 		
 		userListModel = new DefaultListModel<>();
