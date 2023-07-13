@@ -147,6 +147,7 @@ public class ProjectClient extends JFrame {
 				/**/
 				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("createRoom", roomName);
 				ClientSender.getInstance().send(requestBodyDto);
+				roomNameLabel.setText("방이름: " + roomName);
 				mainCardLayout.show(mainCardPanel, "chattingRoomPanel");
 				requestBodyDto = new RequestBodyDto<String>("join", roomName);
 				ClientSender.getInstance().send(requestBodyDto);
@@ -166,6 +167,7 @@ public class ProjectClient extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
 					String roomName = roomListModel.get(roomList.getSelectedIndex());
+					roomNameLabel.setText("방이름: " + roomName);
 					mainCardLayout.show(mainCardPanel, "chattingRoomPanel");
 					RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("join", roomName);
 					ClientSender.getInstance().send(requestBodyDto);
@@ -196,7 +198,6 @@ public class ProjectClient extends JFrame {
 		
 		/*chattingRoomPanel의 방이름 표시- 방생성 시(join) roomName가지고 오도록 설정하기*/
 		roomNameLabel = new JLabel();
-		roomNameLabel.setText("방이름");
 		roomNameLabel.setHorizontalAlignment(JLabel.CENTER);
 		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
 		
