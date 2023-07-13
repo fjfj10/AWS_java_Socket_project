@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 
@@ -15,12 +16,14 @@ import socket_project_client.dto.RequestBodyDto;
 
 public class ClientReceiver extends Thread{
 	
+	
+	
 	@Override
 	public void run() {
-		ProjectClient simpleGUIClient = ProjectClient.getInstance();
+		ProjectClient projectClient = ProjectClient.getInstance();
 		while (true) {
 			try {
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(simpleGUIClient.getSocket().getInputStream()));
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(projectClient.getSocket().getInputStream()));
 				String requestBody = bufferedReader.readLine();
 				
 				requestController(requestBody);
@@ -57,6 +60,12 @@ public class ClientReceiver extends Thread{
 				userListModel.addAll(usernameList);
 				userListModel.set(0, userListModel.get(0) + "(방장)");
 				break;
+			
+			case "leave" : 
+				ProjectClient projectClient = ProjectClient.getInstance();
+				projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
+				JOptionPane.showMessageDialog(null, "방이 종료되었습니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+				
 
 		}
 	}
