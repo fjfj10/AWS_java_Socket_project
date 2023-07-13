@@ -64,6 +64,7 @@ public class ProjectClient extends JFrame {
 	private JButton ExitButton;
 	private JLabel SendListLabel;
 	private JLabel ClientNameLabel;
+	private JLabel roomNameLabel;
 			
 
 	/*GUIClient 생성*/
@@ -122,7 +123,7 @@ public class ProjectClient extends JFrame {
 		chattingRoomListPanel.setLayout(null);
 		chattingRoomListPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainCardPanel.add(chattingRoomListPanel, "chattingRoomListPanel");
-		/*<createRoomButton>*/
+		/*<방만들기 버튼>*/
 		JButton createRoomButton = new JButton("방만들기");
 		createRoomButton.setBounds(10, 10, 100, 30);
 		createRoomButton.addMouseListener(new MouseAdapter() {
@@ -192,6 +193,12 @@ public class ProjectClient extends JFrame {
 		
 		chattingTextArea = new JTextArea();
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
+		
+		/*chattingRoomPanel의 방이름 표시- 방생성 시(join) roomName가지고 오도록 설정하기*/
+		roomNameLabel = new JLabel();
+		roomNameLabel.setText("방이름");
+		roomNameLabel.setHorizontalAlignment(JLabel.CENTER);
+		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
 		
 		messageTextField = new JTextField();
 		messageTextField.addKeyListener(new KeyAdapter() {
