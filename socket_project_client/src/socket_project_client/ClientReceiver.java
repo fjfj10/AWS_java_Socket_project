@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+
 import com.google.gson.Gson;
 
 import socket_project_client.dto.RequestBodyDto;
@@ -50,8 +52,10 @@ public class ClientReceiver extends Thread{
 			
 			case "updateUserList" : 
 				List<String> usernameList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
-				ProjectClient.getInstance().getUserListModel().clear();
-				ProjectClient.getInstance().getUserListModel().addAll(usernameList);
+				DefaultListModel<String> userListModel = ProjectClient.getInstance().getUserListModel();
+				userListModel.clear();
+				userListModel.addAll(usernameList);
+				userListModel.set(0, userListModel.get(0) + "(방장)");
 				break;
 
 		}
