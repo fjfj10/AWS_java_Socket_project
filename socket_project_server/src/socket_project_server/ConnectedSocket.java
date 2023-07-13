@@ -66,7 +66,7 @@ public class ConnectedSocket extends Thread {
 				break;
 	
 			case "leave":
-				leave(requestBody);
+				leave();
 				break;
 		}
 	}
@@ -102,7 +102,7 @@ public class ConnectedSocket extends Thread {
 
 		RequestBodyDto<List<String>> updateRoomListRequestBodyDto = new RequestBodyDto<List<String>>("updateRoomList",
 				roomNameList);
-
+		
 		ProjectServer.connectedSocketList.forEach(con -> {
 			ProjectServerSender.getInstance().send(con.socket, updateRoomListRequestBodyDto);
 		});
@@ -161,11 +161,10 @@ public class ConnectedSocket extends Thread {
 
 	}
 
-	private void leave(String requestBody) {
-		String userName = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+	private void leave() {
 		ProjectServer.roomList.forEach(room -> {
-			if(room.getUserList().contains(userName)) {
-				if(!room.getOwner().equals(userName)) {
+			if(room.getUserList().contains(this)) {
+				if(!room.getOwner().equals(this.username)) {
 					room.getUserList().remove(this);
 					
 					List<String> usernameList = new ArrayList<>();					
@@ -178,15 +177,54 @@ public class ConnectedSocket extends Thread {
 						RequestBodyDto<List<String>> updateUserListDto = new RequestBodyDto<List<String>>("updateUserList", usernameList);
 						RequestBodyDto<String> leaveMessageDto = new RequestBodyDto<String>("showMessage", username + "님이 나갔습니다.");
 							
-						ProjectServerSender.getInstance().send(connectedSocket.socket, updateUserListDto);						
+						ProjectServerSender.getInstance().send(connectedSocket.socket, updateUserListDto);	
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						ProjectServerSender.getInstance().send(connectedSocket.socket, leaveMessageDto);
 					});
+					List<String> roomNameList = new ArrayList<>();
+
+					ProjectServer.roomList.forEach(room2 -> {
+						roomNameList.add(room2.getRoomName());
+					});
+
+					RequestBodyDto<List<String>> updateRoomListRequestBodyDto = new RequestBodyDto<List<String>>("updateRoomList",
+							roomNameList);					
+					ProjectServerSender.getInstance().send(this.socket, updateRoomListRequestBodyDto);
+
+										
+				}else if(room.getOwner().equals(this.username)) {
+					ProjectServer.roomList.remove(room);
 					
-				}else if(room.getOwner().equals(userName)) {
+					List<String> roomNameList = new ArrayList<>();
+
+					ProjectServer.roomList.forEach(room3 -> {
+						roomNameList.add(room3.getRoomName());
+					});
+
+					RequestBodyDto<List<String>> updateRoomListRequestBodyDto = new RequestBodyDto<List<String>>("updateRoomList",
+							roomNameList);
+
+					ProjectServer.connectedSocketList.forEach(con -> {
+						ProjectServerSender.getInstance().send(con.socket, updateRoomListRequestBodyDto);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					});
+					
 					room.getUserList().forEach(connectedSocket -> {
 						RequestBodyDto<String> leaveDto = new RequestBodyDto<String>("leave", null);
-						ProjectServerSender.getInstance().send(connectedSocket.socket, leaveDto);			
-						ProjectServer.roomList.remove(room);
+						ProjectServerSender.getInstance().send(connectedSocket.socket, leaveDto);
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					});
 				
 				}

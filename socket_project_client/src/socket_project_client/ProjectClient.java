@@ -233,11 +233,10 @@ public class ProjectClient extends JFrame {
 		ExitButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			
-				
-				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("leave", username);
-				
+				mainCardLayout.show(mainCardPanel, "chattingRoomListPanel");
+				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("leave", null);				
 				ClientSender.getInstance().send(requestBodyDto);
+				chattingTextArea.setText("");
 			}
 		});
 		ExitButton.setBounds(322, 10, 100, 33);

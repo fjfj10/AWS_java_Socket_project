@@ -64,6 +64,7 @@ public class ClientReceiver extends Thread{
 			case "leave" : 
 				ProjectClient projectClient = ProjectClient.getInstance();
 				projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
+				ProjectClient.getInstance().getChattingTextArea().setText("");
 				JOptionPane.showMessageDialog(null, "방이 종료되었습니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
 				
 
