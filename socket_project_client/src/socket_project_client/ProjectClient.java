@@ -221,6 +221,20 @@ public class ProjectClient extends JFrame {
 		userList = new JList(userListModel);
 		userListScrollPane.setViewportView(userList);
 		
+		ExitButton = new JButton("나가기");
+		ExitButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		ExitButton.setBounds(322, 10, 100, 33);
+		chattingRoomPanel.add(ExitButton);
+		
+		SendListLabel = new JLabel("Label");
+		SendListLabel.setBounds(12, 208, 51, 31);
+		chattingRoomPanel.add(SendListLabel);
+		
 		
 		
 	}
