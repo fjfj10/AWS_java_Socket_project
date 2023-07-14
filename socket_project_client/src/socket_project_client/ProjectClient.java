@@ -182,8 +182,8 @@ public class ProjectClient extends JFrame {
 		});
 		roomListScrollPanel.setViewportView(roomList);
 		/*<Label에 Client 본인의 이름표시>*/
-		clientNameLabel.setBounds(116, 10, 133, 30);
 		clientNameLabel = new JLabel();
+		clientNameLabel.setBounds(116, 10, 133, 30);
 		clientNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		chattingRoomListPanel.add(clientNameLabel);
