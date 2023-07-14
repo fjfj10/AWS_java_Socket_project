@@ -35,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Color;
 
 @Getter
 public class ProjectClient extends JFrame {
@@ -201,6 +202,7 @@ public class ProjectClient extends JFrame {
 		
 		/*<<chattingRoomPanel 생성>>*/
 		chattingRoomPanel = new JPanel();
+		chattingRoomPanel.setBackground(new Color(255, 250, 205));
 		chattingRoomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		chattingRoomPanel.setLayout(null);
 		mainCardPanel.add(chattingRoomPanel, "chattingRoomPanel");
@@ -281,13 +283,15 @@ public class ProjectClient extends JFrame {
 				ClientSender.getInstance().send(requestBodyDto);
 			}
 		});
-		exitButton.setBounds(459, 7, 100, 33);
+		exitButton.setBounds(361, 7, 198, 33);
 		chattingRoomPanel.add(exitButton);
 		
 		/*<보낼사람 선택>*/
 		sendListLabel = new JLabel();
+		sendListLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		sendListLabel.setHorizontalAlignment(JLabel.CENTER);
 		sendListLabel.setText("전체");
-		sendListLabel.setBounds(12, 488, 61, 49);
+		sendListLabel.setBounds(12, 486, 80, 49);
 		chattingRoomPanel.add(sendListLabel);
 		
 		
