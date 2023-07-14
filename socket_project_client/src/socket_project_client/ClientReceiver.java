@@ -53,7 +53,7 @@ public class ClientReceiver extends Thread{
 				ProjectClient.getInstance().getChattingTextArea().append(messageContent + "\n"); 
 				break;
 			
-			case "updateUserList" : 
+			case "updateUserList":
 				List<String> usernameList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
 				DefaultListModel<String> userListModel = ProjectClient.getInstance().getUserListModel();
 				userListModel.clear();
@@ -61,13 +61,10 @@ public class ClientReceiver extends Thread{
 				userListModel.set(0, userListModel.get(0) + "(방장)");
 				break;
 			
-			case "leave" : 
+			case "leave":
 				ProjectClient projectClient = ProjectClient.getInstance();
 				projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
 				ProjectClient.getInstance().getChattingTextArea().setText("");
-				JOptionPane.showMessageDialog(null, "방이 종료되었습니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
-				
-
 		}
 	}
 	
