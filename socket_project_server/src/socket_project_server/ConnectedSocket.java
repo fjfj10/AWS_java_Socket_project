@@ -154,8 +154,6 @@ public class ConnectedSocket extends Thread {
 				}else {					
 					room.getUserList().forEach(con -> {
 						if(con.username.equals(sendMessage.getToUsername())) {
-//		보내는사람 화면					[ToUsername]에게 귓속말 + sendMessage
-//		받는사람 화면						[FromUsername]의 귓속말 + sendMessage
 							RequestBodyDto<String> senddto = new RequestBodyDto<String>("showMessage","[" + sendMessage.getToUsername() + "]에게 귓속말: " 
 									+ sendMessage.getMessageBody());
 							RequestBodyDto<String> receivedto = new RequestBodyDto<String>("showMessage","[" + sendMessage.getFromUsername() + "]의 귓속말: " 
@@ -218,8 +216,6 @@ public class ConnectedSocket extends Thread {
 				
 			}
 		}
-		System.out.println("현재 방 상태");
-		System.out.println(ProjectServer.roomList);
 	}
 	
 	private void sleep(int milliseconds) {
