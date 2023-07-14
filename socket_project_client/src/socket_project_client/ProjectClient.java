@@ -66,8 +66,8 @@ public class ProjectClient extends JFrame {
 	private JScrollPane userListScrollPane;
 	private DefaultListModel<String> userListModel;
 	private JList userList;
-	private JButton ExitButton;
-	private JLabel SendListLabel;
+	private JButton exitButton;
+	private JLabel sendListLabel;
 	private JLabel clientNameLabel;
 	private JLabel roomNameLabel;
 	private JLabel userImageLabel;
@@ -232,13 +232,13 @@ public class ProjectClient extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					                     
-					SendMessage sendmessage = SendMessage.builder().fromUsername(username).toUsername(SendListLabel.getText()).messageBody(messageTextField.getText()).build();
+					SendMessage sendmessage = SendMessage.builder().fromUsername(username).toUsername(sendListLabel.getText()).messageBody(messageTextField.getText()).build();
 					
-					RequestBodyDto<SendMessage> requestBodyDto = new RequestBodyDto<>("SendMessage", sendmessage);
+					RequestBodyDto<SendMessage> requestBodyDto = new RequestBodyDto<>("sendMessage", sendmessage);
 					
 					ClientSender.getInstance().send(requestBodyDto);
 					messageTextField.setText("");
-					SendListLabel.setText("전체");
+					sendListLabel.setText("전체");
 				}
 			}
 		});
@@ -266,33 +266,29 @@ public class ProjectClient extends JFrame {
 						userName = userName.substring(0, userName.length() - 4);
 					}
 					
-					SendListLabel.setText(userName);																	
-					SendListLabel.setText(userName);																	
+					sendListLabel.setText(userName);
 				}
 			}
 		});
 		
-		userListScrollPane.setViewportView(userList);
-		userListModel = new DefaultListModel<>();
-		
 		/*<접속자 중 메세지를 보낼 상대를 선택>*/
 		/*<나가기 버튼>*/
-		ExitButton = new JButton("나가기");
-		ExitButton.addMouseListener(new MouseAdapter() {
+		exitButton = new JButton("나가기");
+		exitButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("leave", null);				
 				ClientSender.getInstance().send(requestBodyDto);
 			}
 		});
-		ExitButton.setBounds(459, 7, 100, 33);
-		chattingRoomPanel.add(ExitButton);
+		exitButton.setBounds(459, 7, 100, 33);
+		chattingRoomPanel.add(exitButton);
 		
 		/*<보낼사람 선택>*/
-		SendListLabel = new JLabel();
-		SendListLabel.setText("전체");
-		SendListLabel.setBounds(12, 488, 61, 49);
-		chattingRoomPanel.add(SendListLabel);
+		sendListLabel = new JLabel();
+		sendListLabel.setText("전체");
+		sendListLabel.setBounds(12, 488, 61, 49);
+		chattingRoomPanel.add(sendListLabel);
 		
 		
 		

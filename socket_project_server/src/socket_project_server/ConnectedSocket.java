@@ -61,7 +61,7 @@ public class ConnectedSocket extends Thread {
 				join(requestBody);
 				break;
 	
-			case "SendMessage":
+			case "sendMessage":
 				sendMessage(requestBody);
 				break;
 	
