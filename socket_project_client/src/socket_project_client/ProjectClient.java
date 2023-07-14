@@ -37,7 +37,7 @@ import javax.swing.ImageIcon;
 
 @Getter
 public class ProjectClient extends JFrame {
-	//싱글톤 쓴이유 : ClientReceiver에서 SimpleGUIClient안의 메소드들을 사용하고 싶어서
+	
 	private static ProjectClient instance;
 	public static ProjectClient getInstance() {
 		if(instance == null) {
@@ -105,7 +105,7 @@ public class ProjectClient extends JFrame {
 			System.exit(0);
 		}
 		try {
-			socket = new Socket("127.0.0.1", 8000);          //127.0.0.1은 로컬주소의 변수 같은거 자신의 주소를 불러옴
+			socket = new Socket("127.0.0.1", 8000);        
 			
 			
 		} catch (IOException e) {
@@ -149,7 +149,6 @@ public class ProjectClient extends JFrame {
 						return;
 					}
 				}
-				/**/
 				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("createRoom", roomName);
 				ClientSender.getInstance().send(requestBodyDto);
 				roomNameLabel.setText("방이름: " + roomName);
@@ -164,7 +163,8 @@ public class ProjectClient extends JFrame {
 		roomListScrollPanel = new JScrollPane();
 		roomListScrollPanel.setBounds(10, 50, 414, 201);
 		chattingRoomListPanel.add(roomListScrollPanel);
-		/*더블클릭했을때 방으로 입장하는 기능*/
+		
+		/*<더블클릭했을때 방으로 입장하는 기능>*/
 		roomListModel = new DefaultListModel<String>();
 		roomList = new JList(roomListModel);
 		roomList.addMouseListener(new MouseAdapter() {
@@ -180,13 +180,14 @@ public class ProjectClient extends JFrame {
 			}
 		});
 		roomListScrollPanel.setViewportView(roomList);
-		/*Label에 Client 본인의 접속표시, 이름표시*/
+		/*<Label에 Client 본인의 이름표시>*/
 		ClientNameLabel = new JLabel();
 		ClientNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientNameLabel.setText("<< 접속자: "+ username + " >>");
 		ClientNameLabel.setBounds(116, 10, 133, 30);
 		chattingRoomListPanel.add(ClientNameLabel);
 		
+		/*<웃음 이미지 삽입>*/
 		userImageLabel = new JLabel();
 		userImageLabel.setBounds(362, 5, 60, 41);
 		ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir") + "\\images\\smile.png");
@@ -197,12 +198,13 @@ public class ProjectClient extends JFrame {
 		userImageLabel.setIcon(imageIcon);
 		chattingRoomListPanel.add(userImageLabel);
 		
+		/*<<chattingRoomPanel 생성>>*/
 		chattingRoomPanel = new JPanel();
 		chattingRoomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		chattingRoomPanel.setLayout(null);
 		mainCardPanel.add(chattingRoomPanel, "chattingRoomPanel");
 	
-		/*<<Text 입력과 출력(Client간의 대화 표시)부분>>*/
+		/*<Text 입력과 출력(Client간의 대화 표시)부분>*/
 		JScrollPane chattingTextAreaScrollPanel = new JScrollPane();
 		chattingTextAreaScrollPanel.setBounds(12, 10, 298, 188);
 		chattingRoomPanel.add(chattingTextAreaScrollPanel);
@@ -213,11 +215,12 @@ public class ProjectClient extends JFrame {
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
 		
-		/*chattingRoomPanel의 방이름 표시*/
+		/*<chattingRoomPanel의 방이름 표시>*/
 		roomNameLabel = new JLabel();
 		roomNameLabel.setHorizontalAlignment(JLabel.CENTER);
 		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
 		
+		/*<메세지 보내는 곳>*/
 		messageTextField = new JTextField();
 		messageTextField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -238,7 +241,7 @@ public class ProjectClient extends JFrame {
 		chattingRoomPanel.add(messageTextField);
 		messageTextField.setColumns(10);
 		
-		/*<<접속자 목록 표시>>*/
+		/*<접속자 목록 표시>*/
 		userListScrollPane = new JScrollPane();
 		userListScrollPane.setBounds(322, 50, 100, 148);
 		chattingRoomPanel.add(userListScrollPane);
@@ -246,6 +249,7 @@ public class ProjectClient extends JFrame {
 		userListModel = new DefaultListModel<>();
 		userList = new JList(userListModel);
 		userList.setCellRenderer(new ClientNameBoldRenderer(userListModel));
+		
 		/*<접속자 중 메세지를 보낼 상대를 선택>*/
 		userList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -263,7 +267,7 @@ public class ProjectClient extends JFrame {
 		});
 		
 		userListScrollPane.setViewportView(userList);
-		
+		/*<나가기 버튼>*/
 		ExitButton = new JButton("나가기");
 		ExitButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -275,6 +279,7 @@ public class ProjectClient extends JFrame {
 		ExitButton.setBounds(322, 10, 100, 33);
 		chattingRoomPanel.add(ExitButton);
 		
+		/*<보낼사람 선택>*/
 		SendListLabel = new JLabel();
 		SendListLabel.setText("전체");
 		SendListLabel.setBounds(12, 208, 51, 31);
