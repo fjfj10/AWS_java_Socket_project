@@ -154,12 +154,14 @@ public class ConnectedSocket extends Thread {
 				}else {					
 					room.getUserList().forEach(con -> {
 						if(con.username.equals(sendMessage.getToUsername())) {
-							RequestBodyDto<String> dto = new RequestBodyDto<String>("showMessage","<" + sendMessage.getToUsername() + ">" 
-									+ sendMessage.getFromUsername() + ": " + sendMessage.getMessageBody());
-							ProjectServerSender.getInstance().send(socket, dto);
-							ProjectServerSender.getInstance().send(con.socket, dto);
-						}else {
-							
+//		보내는사람 화면					[ToUsername]에게 귓속말 + sendMessage
+//		받는사람 화면						[FromUsername]의 귓속말 + sendMessage
+							RequestBodyDto<String> senddto = new RequestBodyDto<String>("showMessage","[" + sendMessage.getToUsername() + "]에게 귓속말: " 
+									+ sendMessage.getMessageBody());
+							RequestBodyDto<String> receivedto = new RequestBodyDto<String>("showMessage","[" + sendMessage.getFromUsername() + "]의 귓속말: " 
+									+ sendMessage.getMessageBody());
+							ProjectServerSender.getInstance().send(socket, senddto);
+							ProjectServerSender.getInstance().send(con.socket, receivedto);
 						}
 					});											
 				}

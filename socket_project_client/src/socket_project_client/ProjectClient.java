@@ -226,7 +226,7 @@ public class ProjectClient extends JFrame {
 					
 					ClientSender.getInstance().send(requestBodyDto);
 					messageTextField.setText("");
-					
+					SendListLabel.setText("전체");
 				}
 			}
 		});
@@ -247,7 +247,12 @@ public class ProjectClient extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
 					String userName = userListModel.get(userList.getSelectedIndex());						
-					SendListLabel.setText(userName);
+					
+					if(userList.getSelectedIndex() == 0) {	
+						userName = userName.substring(0, userName.length() - 4);
+					}
+					
+					SendListLabel.setText(userName);																	
 				}
 			}
 		});
