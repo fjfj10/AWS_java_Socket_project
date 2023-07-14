@@ -180,7 +180,17 @@ public class ConnectedSocket extends Thread {
 					
 					room.getUserList().forEach(connectedSocket -> {
 						ProjectServerSender.getInstance().send(connectedSocket.socket, updateUserListDto);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						ProjectServerSender.getInstance().send(connectedSocket.socket, leaveMessageDto);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					});
 					
 					try {
