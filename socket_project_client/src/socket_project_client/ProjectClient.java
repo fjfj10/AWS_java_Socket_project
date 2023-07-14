@@ -207,12 +207,13 @@ public class ProjectClient extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					                     
-					SendMessage sendmessage = SendMessage.builder().fromUsername(username).toUsername(SendListLabel.getName()).messageBody(messageTextField.getText()).build();
+					SendMessage sendmessage = SendMessage.builder().fromUsername(username).toUsername(SendListLabel.getText()).messageBody(messageTextField.getText()).build();
 					
 					RequestBodyDto<SendMessage> requestBodyDto = new RequestBodyDto<>("SendMessage", sendmessage);
 					
 					ClientSender.getInstance().send(requestBodyDto);
 					messageTextField.setText("");
+					
 				}
 			}
 		});
@@ -252,6 +253,7 @@ public class ProjectClient extends JFrame {
 		chattingRoomPanel.add(ExitButton);
 		
 		SendListLabel = new JLabel();
+		SendListLabel.setText("전체");
 		SendListLabel.setBounds(12, 208, 51, 31);
 		chattingRoomPanel.add(SendListLabel);
 		

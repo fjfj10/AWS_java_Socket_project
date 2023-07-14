@@ -145,21 +145,26 @@ public class ConnectedSocket extends Thread {
 		System.out.println(sendMessage);
 		ProjectServer.roomList.forEach(room -> {
 			if (room.getUserList().contains(this)) {
-				if(sendMessage.getToUsername().equals(null)) {
+				if(sendMessage.getToUsername().equals("전체")) {
 					room.getUserList().forEach(con -> {
 						RequestBodyDto<String> dto = new RequestBodyDto<String>("showMessage", sendMessage.getFromUsername() + ": " + sendMessage.getMessageBody());
 						ProjectServerSender.getInstance().send(con.socket, dto);
 					});
 				
-				}else {
-					RequestBodyDto<String> dto = new RequestBodyDto<String>("showMessage","<" + sendMessage.getToUsername() + ">" 
-							+ sendMessage.getFromUsername() + ": " + sendMessage.getMessageBody());
-//				room의 userList에 있는 유저 중 toUser의 유저네임과 같은 이름을 가진 connectedSocket에게 전송
-//					ProjectServerSender.getInstance().send(room.getUserList(). , dto);
+				}else {					
+					room.getUserList().forEach(con -> {
+						if(con.username.equals(sendMessage.getToUsername())) {
+							RequestBodyDto<String> dto = new RequestBodyDto<String>("showMessage","<" + sendMessage.getToUsername() + ">" 
+									+ sendMessage.getFromUsername() + ": " + sendMessage.getMessageBody());
+							ProjectServerSender.getInstance().send(socket, dto);
+							ProjectServerSender.getInstance().send(con.socket, dto);
+						}else {
+							
+						}
+					});											
 				}
 			}
 		});
-
 	}
 
 	private void leave() {
