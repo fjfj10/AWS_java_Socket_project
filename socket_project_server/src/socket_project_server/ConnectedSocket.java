@@ -129,11 +129,7 @@ public class ConnectedSocket extends Thread {
 							username + "님이 들어왔습니다.");
 
 					ProjectServerSender.getInstance().send(connectedSocket.socket, updateUserListDto);
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					sleep(100);
 					ProjectServerSender.getInstance().send(connectedSocket.socket, joinMessageDto);
 				});
 			}
@@ -185,14 +181,12 @@ public class ConnectedSocket extends Thread {
 					
 					room.getUserList().forEach(connectedSocket -> {
 						ProjectServerSender.getInstance().send(connectedSocket.socket, updateUserListDto);
+						sleep(10);
 						ProjectServerSender.getInstance().send(connectedSocket.socket, leaveMessageDto);
+						sleep(10);
 					});
 					
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					sleep(100);
 		
 					RequestBodyDto<String> leaveDto = new RequestBodyDto<String>("leave", null);
 					ProjectServerSender.getInstance().send(this.socket, leaveDto);
@@ -208,11 +202,7 @@ public class ConnectedSocket extends Thread {
 					ProjectServer.connectedSocketList.forEach(con -> {
 						ProjectServerSender.getInstance().send(con.socket, updateRoomListRequestBodyDto);
 					});
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					sleep(10);
 					room.getUserList().forEach(connectedSocket -> {
 						RequestBodyDto<String> leaveDto = new RequestBodyDto<String>("leave", null);
 						ProjectServerSender.getInstance().send(connectedSocket.socket, leaveDto);
@@ -223,5 +213,13 @@ public class ConnectedSocket extends Thread {
 		}
 		System.out.println("현재 방 상태");
 		System.out.println(ProjectServer.roomList);
+	}
+	
+	private void sleep(int milliseconds) {
+		try {
+			Thread.sleep(milliseconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
