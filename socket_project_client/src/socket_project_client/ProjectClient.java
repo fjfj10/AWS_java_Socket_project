@@ -196,7 +196,7 @@ public class ProjectClient extends JFrame {
 		chattingTextArea = new JTextArea();
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
 		
-		/*chattingRoomPanel의 방이름 표시- 방생성 시(join) roomName가지고 오도록 설정하기*/
+		/*chattingRoomPanel의 방이름 표시*/
 		roomNameLabel = new JLabel();
 		roomNameLabel.setHorizontalAlignment(JLabel.CENTER);
 		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
@@ -207,7 +207,7 @@ public class ProjectClient extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					                     
-					SendMessage sendmessage = SendMessage.builder().fromUsername(username).messageBody(messageTextField.getText()).build();
+					SendMessage sendmessage = SendMessage.builder().fromUsername(username).toUsername(SendListLabel.getName()).messageBody(messageTextField.getText()).build();
 					
 					RequestBodyDto<SendMessage> requestBodyDto = new RequestBodyDto<>("SendMessage", sendmessage);
 					
@@ -227,6 +227,17 @@ public class ProjectClient extends JFrame {
 		
 		userListModel = new DefaultListModel<>();
 		userList = new JList(userListModel);
+		/*<접속자 중 메세지를 보낼 상대를 선택>*/
+		userList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					String userName = userListModel.get(userList.getSelectedIndex());						
+					SendListLabel.setText(userName);
+				}
+			}
+		});
+		
 		userListScrollPane.setViewportView(userList);
 		
 		ExitButton = new JButton("나가기");
@@ -240,7 +251,7 @@ public class ProjectClient extends JFrame {
 		ExitButton.setBounds(322, 10, 100, 33);
 		chattingRoomPanel.add(ExitButton);
 		
-		SendListLabel = new JLabel("Label");
+		SendListLabel = new JLabel();
 		SendListLabel.setBounds(12, 208, 51, 31);
 		chattingRoomPanel.add(SendListLabel);
 		
