@@ -245,6 +245,7 @@ public class ProjectClient extends JFrame {
 		
 		userListModel = new DefaultListModel<>();
 		userList = new JList(userListModel);
+		userList.setCellRenderer(new ClientNameBoldRenderer(userListModel));
 		/*<접속자 중 메세지를 보낼 상대를 선택>*/
 		userList.addMouseListener(new MouseAdapter() {
 			@Override
