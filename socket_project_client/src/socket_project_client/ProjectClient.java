@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
 
 import socket_project_client.dto.RequestBodyDto;
 import socket_project_client.dto.SendMessage;
@@ -207,6 +208,9 @@ public class ProjectClient extends JFrame {
 		chattingRoomPanel.add(chattingTextAreaScrollPanel);
 		
 		chattingTextArea = new JTextArea();
+		chattingTextArea.setEditable(false);
+		DefaultCaret caret = (DefaultCaret) chattingTextArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
 		
 		/*chattingRoomPanel의 방이름 표시*/
