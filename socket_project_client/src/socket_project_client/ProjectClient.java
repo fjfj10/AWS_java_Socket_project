@@ -221,7 +221,7 @@ public class ProjectClient extends JFrame {
 		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
 		
 		chattingTextArea = new JTextArea();
-		chattingTextArea.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		chattingTextArea.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
 		chattingTextArea.setEditable(false);
 		
@@ -252,7 +252,7 @@ public class ProjectClient extends JFrame {
 		chattingRoomPanel.add(userListScrollPane);
 		userListModel = new DefaultListModel<>();
 		userList = new JList(userListModel);
-		userList.setFont(new Font("맑은 고딕", Font.PLAIN, 25));
+		userList.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		userListScrollPane.setViewportView(userList);
 		userList.setCellRenderer(new ClientNameBoldRenderer(userListModel));
 		/*<접속자 중 메세지를 보낼 상대를 선택>*/
