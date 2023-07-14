@@ -1,6 +1,7 @@
 package socket_project_client;
 import java.awt.CardLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.awt.Label;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +31,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 @Getter
 public class ProjectClient extends JFrame {
@@ -65,6 +68,7 @@ public class ProjectClient extends JFrame {
 	private JLabel SendListLabel;
 	private JLabel ClientNameLabel;
 	private JLabel roomNameLabel;
+	private JLabel userImageLabel;
 			
 
 	/*GUIClient 생성*/
@@ -177,11 +181,20 @@ public class ProjectClient extends JFrame {
 		roomListScrollPanel.setViewportView(roomList);
 		/*Label에 Client 본인의 접속표시, 이름표시*/
 		ClientNameLabel = new JLabel();
+		ClientNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientNameLabel.setText("<< 접속자: "+ username + " >>");
-		ClientNameLabel.setBounds(116, 10, 158, 30);
+		ClientNameLabel.setBounds(116, 10, 133, 30);
 		chattingRoomListPanel.add(ClientNameLabel);
 		
-		
+		userImageLabel = new JLabel();
+		userImageLabel.setBounds(362, 5, 60, 41);
+		ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir") + "\\images\\smile.png");
+		// 크기 조정
+		Image image = imageIcon.getImage();
+		Image resizedImage = image.getScaledInstance(userImageLabel.getWidth(), userImageLabel.getHeight(), Image.SCALE_SMOOTH);  
+		imageIcon = new ImageIcon(resizedImage);// 조정된 이미지로 다시 설정
+		userImageLabel.setIcon(imageIcon);
+		chattingRoomListPanel.add(userImageLabel);
 		
 		chattingRoomPanel = new JPanel();
 		chattingRoomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
