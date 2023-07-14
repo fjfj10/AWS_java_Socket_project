@@ -208,6 +208,7 @@ public class ProjectClient extends JFrame {
 		chattingRoomPanel.add(chattingTextAreaScrollPanel);
 		
 		chattingTextArea = new JTextArea();
+		chattingTextArea.setEditable(false);
 		DefaultCaret caret = (DefaultCaret) chattingTextArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
