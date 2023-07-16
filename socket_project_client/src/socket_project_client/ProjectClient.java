@@ -3,6 +3,8 @@ import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Label;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -35,6 +37,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
 
 @Getter
@@ -272,19 +277,19 @@ public class ProjectClient extends JFrame {
 				}
 			}
 		});
-		
-		/*<접속자 중 메세지를 보낼 상대를 선택>*/
+
 		/*<나가기 버튼>*/
-		exitButton = new JButton("나가기");
+		exitButton = new RoundedButton("나가기");
 		exitButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("leave", null);				
-				ClientSender.getInstance().send(requestBodyDto);
-			}
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("leave", null);
+		        ClientSender.getInstance().send(requestBodyDto);
+		    }
 		});
 		exitButton.setBounds(361, 7, 198, 33);
 		chattingRoomPanel.add(exitButton);
+		
 		
 		/*<보낼사람 선택>*/
 		sendListLabel = new JLabel();
