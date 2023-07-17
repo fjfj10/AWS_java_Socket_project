@@ -177,7 +177,6 @@ public class ConnectedSocket extends Thread {
 
 		RequestBodyDto<SendMessage> requestBodyDto = gson.fromJson(requestBody, typeToken.getType());
 		SendMessage sendMessage = requestBodyDto.getBody();
-		System.out.println(sendMessage);
 		ProjectServer.roomList.forEach(room -> {
 			if (room.getUserList().contains(this)) {
 				if(sendMessage.getToUsername().equals("전체")) {
