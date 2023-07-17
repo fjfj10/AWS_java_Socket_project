@@ -240,16 +240,14 @@ public class ProjectClient extends JFrame {
 		DefaultCaret caret = (DefaultCaret) chattingTextArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
+		chattingTextArea.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		
 		
 		/*<chattingRoomPanel의 방이름 표시>*/
 		roomNameLabel = new JLabel();
 		roomNameLabel.setHorizontalAlignment(JLabel.CENTER);
 		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
 		
-		chattingTextArea = new JTextArea();
-		chattingTextArea.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
-		chattingTextArea.setEditable(false);
 		
 		/*<메세지 보내는 곳>*/
 		messageTextField = new JTextField();
