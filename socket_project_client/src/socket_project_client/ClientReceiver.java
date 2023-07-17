@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -43,7 +45,16 @@ public class ClientReceiver extends Thread{
 		switch (resorce) {
 		
 			case "updateRoomList":
+				String searchCondition = ProjectClient.getInstance().getSearchRoomTextField().getText();
 				List<String> roomList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+				
+				if(!searchCondition.equals("")) {
+					roomList = roomList.stream().filter((room) -> {
+						return room.contains(searchCondition);
+					}).collect(Collectors.toList());
+					
+				}
+				
 				ProjectClient.getInstance().getRoomListModel().clear();
 				ProjectClient.getInstance().getRoomListModel().addAll(roomList);
 				break;

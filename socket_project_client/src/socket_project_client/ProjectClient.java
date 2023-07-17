@@ -77,6 +77,7 @@ public class ProjectClient extends JFrame {
 	private JLabel clientNameLabel;
 	private JLabel roomNameLabel;
 	private JLabel userImageLabel;
+	private JTextField searchRoomTextField;
 			
 
 	/*GUIClient 생성*/
@@ -189,14 +190,14 @@ public class ProjectClient extends JFrame {
 		roomListScrollPanel.setViewportView(roomList);
 		/*<Label에 Client 본인의 이름표시>*/
 		clientNameLabel = new JLabel();
-		clientNameLabel.setBounds(116, 10, 133, 30);
+		clientNameLabel.setBounds(361, 5, 133, 65);
 		clientNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		chattingRoomListPanel.add(clientNameLabel);
 		
 		/*<웃음 이미지 삽입>*/
 		userImageLabel = new JLabel();
-		userImageLabel.setBounds(362, 5, 60, 41);
+		userImageLabel.setBounds(502, 5, 57, 65);
 		ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir") + "\\images\\smile.png");
 		// 크기 조정
 		Image image = imageIcon.getImage();
@@ -204,6 +205,19 @@ public class ProjectClient extends JFrame {
 		imageIcon = new ImageIcon(resizedImage);// 조정된 이미지로 다시 설정
 		userImageLabel.setIcon(imageIcon);
 		chattingRoomListPanel.add(userImageLabel);
+		
+		searchRoomTextField = new JTextField();
+		searchRoomTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				searchRoomTextField.requestFocus();
+				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("connection", username);
+				ClientSender.getInstance().send(requestBodyDto);
+			}
+		});
+		searchRoomTextField.setBounds(123, 5, 226, 57);
+		chattingRoomListPanel.add(searchRoomTextField);
+		searchRoomTextField.setColumns(10);
 		
 		/*<<chattingRoomPanel 생성>>*/
 		chattingRoomPanel = new JPanel();
