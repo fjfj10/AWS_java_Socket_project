@@ -71,6 +71,10 @@ public class ConnectedSocket extends Thread {
 		}
 	}
 
+	/**
+	 * username 필드를 초기화하고
+	 * 이 소켓에게 최신 방 정보를 보내줍니다 (READ -> roomList)
+	 */
 	private void connection(String requestBody) {
 		username = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
 
@@ -86,6 +90,10 @@ public class ConnectedSocket extends Thread {
 		ProjectServerSender.getInstance().send(socket, updateRoomListRequestBodyDto);
 	}
 
+	/**
+	 * 1. 방 목록에 새로운 방을 하나 추가합니다 (CREATE -> roomList)
+	 * 2. 모든 소켓에게 최신 방 정보를 보내줍니다 (READ -> roomList)
+	 */
 	private void createRoom(String requestBody) {
 		
 		String roomName = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
@@ -109,6 +117,12 @@ public class ConnectedSocket extends Thread {
 
 	}
 
+	/**
+	 * roomName을 입력받아 -> 일치하는 방이 있으면 해당 방의 유저목록에 이 ConnectedSocket을 기록합니다 (ADD -> roomList.room.userList)
+	 * 이 방에 접속한 유저들에게
+	 * -> 이 방에 접속한 유저들의 이름을 전달하고 (READ -> roomList.room)
+	 * -> 새로 들어온 유저의 환영 메시지를 보냅니다
+	 */
 	private void join(String requestBody) {
 		String roomName = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
 		ProjectServer.roomList.forEach(room -> {
