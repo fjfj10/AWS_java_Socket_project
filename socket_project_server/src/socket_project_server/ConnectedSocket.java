@@ -49,8 +49,12 @@ public class ConnectedSocket extends Thread {
 		String resorce = gson.fromJson(requestBody, RequestBodyDto.class).getResource();
 
 		switch (resorce) {
-			case "connection":
-				connection(requestBody);
+			case "setUserName":
+				setUserName(requestBody);
+				break;
+		
+			case "getRoomNameList":
+				getRoomNameList(requestBody);
 				break;
 	
 			case "createRoom":
@@ -70,14 +74,31 @@ public class ConnectedSocket extends Thread {
 				break;
 		}
 	}
-
+	 /**중복을 확인하고
+	  * username 필드를 초기화함
+	  */
+	private void setUserName(String requestBody) {
+		boolean isUsernameDuplicated = false;
+		String inputUserName = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+		List<String> usernameList = new ArrayList<>();
+		
+		ProjectServer.connectedSocketList.forEach(con -> {
+			usernameList.add(con.username);
+		});
+		
+		if(usernameList.contains(inputUserName)) {
+			isUsernameDuplicated = true;
+		}
+		RequestBodyDto<Boolean> requestBodyDto = new RequestBodyDto<>("checkUserName", isUsernameDuplicated);
+		ProjectServerSender.getInstance().send(socket, requestBodyDto);
+				
+		username = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+	}
 	/**
-	 * username 필드를 초기화하고
 	 * 이 소켓에게 최신 방 정보를 보내줍니다 (READ -> roomList)
 	 */
-	private void connection(String requestBody) {
-		username = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
-
+	private void getRoomNameList(String requestBody) {
+		
 		List<String> roomNameList = new ArrayList<>();
 
 		ProjectServer.roomList.forEach(room -> {

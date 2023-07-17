@@ -81,25 +81,29 @@ public class ProjectClient extends JFrame {
 	private JTextField searchRoomTextField;
 			
 
-	/*GUIClient 생성*/
+	/*ProjectClient 생성*/
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProjectClient frame = ProjectClient.getInstance();
-					frame.setVisible(true);
-					frame.clientNameLabel.setText("<< 접속자: "+ frame.username + " >>");	
-					ClientReceiver clientReceiver = new ClientReceiver();					
-					clientReceiver.start();
+	                ProjectClient frame = ProjectClient.getInstance();
+	                frame.setVisible(true);
+	                frame.clientNameLabel.setText("<< 접속자: "+ frame.username + " >>");
 
-					RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("connection", frame.username); 
-					ClientSender.getInstance().send(requestBodyDto);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	                ClientReceiver clientReceiver = new ClientReceiver();
+	                clientReceiver.start();
+	                
+	                RequestBodyDto<String> setUserNameRequestBodyDto = new RequestBodyDto<String>("setUserName", frame.username);
+	                ClientSender.getInstance().send(setUserNameRequestBodyDto);
+	                
+	                RequestBodyDto<String> requestBodyDto = new RequestBodyDto<>("getRoomNameList", frame.username);
+	                ClientSender.getInstance().send(requestBodyDto);
+
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    });
 	}
 
 
@@ -212,7 +216,7 @@ public class ProjectClient extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				searchRoomTextField.requestFocus();
-				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("connection", username);
+				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("getRoomNameList", username);
 				ClientSender.getInstance().send(requestBodyDto);
 			}
 		});

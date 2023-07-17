@@ -43,7 +43,17 @@ public class ClientReceiver extends Thread{
 		
 		String resorce = gson.fromJson(requestBody, RequestBodyDto.class).getResource();
 		switch (resorce) {
-		
+			case "checkUserName":
+				boolean isUsernameDuplicated = (boolean) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+				if(isUsernameDuplicated == true) {
+					JOptionPane.showMessageDialog(null, "중복된 ID입니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}else {
+					JOptionPane.showMessageDialog(null, "사용 가능한 ID입니다.", "", JOptionPane.PLAIN_MESSAGE);
+					
+				}
+				break;
+				
 			case "updateRoomList":
 				String searchCondition = ProjectClient.getInstance().getSearchRoomTextField().getText();
 				List<String> roomList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
@@ -51,8 +61,7 @@ public class ClientReceiver extends Thread{
 				if(!searchCondition.equals("")) {
 					roomList = roomList.stream().filter((room) -> {
 						return room.contains(searchCondition);
-					}).collect(Collectors.toList());
-					
+					}).collect(Collectors.toList());					
 				}
 				
 				ProjectClient.getInstance().getRoomListModel().clear();
