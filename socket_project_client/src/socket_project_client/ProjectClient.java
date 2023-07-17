@@ -21,6 +21,7 @@ import javax.swing.text.DefaultCaret;
 
 import socket_project_client.dto.RequestBodyDto;
 import socket_project_client.dto.SendMessage;
+import socket_project_client.renderer.ClientNameBoldRenderer;
 import lombok.Getter;
 
 import javax.swing.JScrollPane;

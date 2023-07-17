@@ -1,4 +1,4 @@
-package socket_project_client;
+package socket_project_client.renderer;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+
+import socket_project_client.ProjectClient;
 
 
 public class ClientNameBoldRenderer extends DefaultListCellRenderer {
