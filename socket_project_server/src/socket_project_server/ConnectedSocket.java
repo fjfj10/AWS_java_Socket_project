@@ -37,7 +37,10 @@ public class ConnectedSocket extends Thread {
 				requestController(requestBody);
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				leave();
+				ProjectServer.connectedSocketList.remove(this);
+				System.out.println(username + "님 접속 종료");
+				return;
 			}
 
 		}

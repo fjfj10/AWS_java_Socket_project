@@ -32,6 +32,7 @@ public class ClientReceiver extends Thread{
 				
 			} catch (IOException e) {
 				e.printStackTrace();
+				return;
 			}
 		
 			

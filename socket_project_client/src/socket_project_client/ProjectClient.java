@@ -122,9 +122,9 @@ public class ProjectClient extends JFrame {
 			
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "서버 응답없음", "연결 실패", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
-		
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
