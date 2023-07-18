@@ -107,6 +107,7 @@ public class ClientReceiver extends Thread{
 	private void leave(String requestBody) {
 		ProjectClient projectClient = ProjectClient.getInstance();
 		projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
+		ProjectClient.getInstance().getMessageTextField().setText("");
 		ProjectClient.getInstance().getChattingTextArea().setText("");
 	}
 }
