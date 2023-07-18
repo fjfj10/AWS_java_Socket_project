@@ -68,8 +68,10 @@ public class ClientReceiver extends Thread{
 	
 	private void checkUserName(String requestBody) {
 		boolean isUsernameDuplicated = (boolean) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
-		if(isUsernameDuplicated == true) {
+//		if(isUsernameDuplicated == true) ->  if(isUsernameDuplicated) 논리형일때 == 쓰지말기
+		if(isUsernameDuplicated) { //if문에 논리형을 넣으면 true일때만 if문 안의 명령을 실행함. false는 else 안의 명령 실행
 			JOptionPane.showMessageDialog(null, "중복된 ID입니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+			//나가지말고 다시 ID입력창을 띄울수 있나?
 			System.exit(0);
 		}else {
 			JOptionPane.showMessageDialog(null, "사용 가능한 ID입니다.", "", JOptionPane.PLAIN_MESSAGE);
@@ -107,6 +109,7 @@ public class ClientReceiver extends Thread{
 	private void leave(String requestBody) {
 		ProjectClient projectClient = ProjectClient.getInstance();
 		projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
-		ProjectClient.getInstance().getChattingTextArea().setText("");
+		ProjectClient.getInstance().getChattingTextArea().setText("");	//지금은 나갈때 TextArea를 초가화함 -> 들어갈때 해줘도 상관X
+		ProjectClient.getInstance().getMessageTextField().setText("");
 	}
 }

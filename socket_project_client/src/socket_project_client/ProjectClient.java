@@ -108,17 +108,16 @@ public class ProjectClient extends JFrame {
 
 
 	public ProjectClient() {
-		
 		username = JOptionPane.showInputDialog(chattingRoomPanel, "ID를 입력하세요");							
-		
-		if(Objects.isNull(username)) {
+		//반복돌려주기 while 사용
+		if(Objects.isNull(username)) {// X눌렀을때
 			System.exit(0);
 		}
-		if(username.isBlank()) {
+		if(username.isBlank()) {//빈칸일때
 			System.exit(0);
 		}
 		try {
-			socket = new Socket("127.0.0.1", 8000);        
+			socket = new Socket("127.0.0.1", 8000); //127.0.0.1 = 본인 IP        
 			
 			
 		} catch (IOException e) {
@@ -136,17 +135,21 @@ public class ProjectClient extends JFrame {
 		mainCardPanel.setLayout(mainCardLayout);
 		setContentPane(mainCardPanel);
 		
+		
 		/*<<roomList를 표시하는 패널>>*/
 		chattingRoomListPanel = new JPanel();
+		chattingRoomListPanel.setBackground(new Color(255, 250, 205));
 		chattingRoomListPanel.setLayout(null);
 		chattingRoomListPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainCardPanel.add(chattingRoomListPanel, "chattingRoomListPanel");
+		
 		/*<방만들기 버튼>*/
 		JButton createRoomButton = new JButton("방만들기");
 		createRoomButton.setBounds(12, 5, 111, 59);
 		createRoomButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
+				//반복 돌려주기(취소하지 않는이상 계속 받을수있도록)
 				String roomName = JOptionPane.showInputDialog(chattingRoomListPanel, "방제목을 입력하세요.");
 				if(Objects.isNull(roomName)) {
 					return;
@@ -193,6 +196,7 @@ public class ProjectClient extends JFrame {
 			}
 		});
 		roomListScrollPanel.setViewportView(roomList);
+		
 		/*<Label에 Client 본인의 이름표시>*/
 		clientNameLabel = new JLabel();
 		clientNameLabel.setBounds(361, 5, 133, 65);
@@ -224,6 +228,7 @@ public class ProjectClient extends JFrame {
 		chattingRoomListPanel.add(searchRoomTextField);
 		searchRoomTextField.setColumns(10);
 		
+		
 		/*<<chattingRoomPanel 생성>>*/
 		chattingRoomPanel = new JPanel();
 		chattingRoomPanel.setBackground(new Color(255, 250, 205));
@@ -241,14 +246,12 @@ public class ProjectClient extends JFrame {
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		chattingTextAreaScrollPanel.setViewportView(chattingTextArea);
 		chattingTextArea.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		
-		
+				
 		/*<chattingRoomPanel의 방이름 표시>*/
 		roomNameLabel = new JLabel();
 		roomNameLabel.setHorizontalAlignment(JLabel.CENTER);
 		chattingTextAreaScrollPanel.setColumnHeaderView(roomNameLabel);
-		
-		
+				
 		/*<메세지 보내는 곳>*/
 		messageTextField = new JTextField();
 		messageTextField.addKeyListener(new KeyAdapter() {
@@ -279,12 +282,13 @@ public class ProjectClient extends JFrame {
 		userList.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		userListScrollPane.setViewportView(userList);
 		userList.setCellRenderer(new ClientNameBoldRenderer(userListModel));
+		
 		/*<접속자 중 메세지를 보낼 상대를 선택>*/
 		userList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
-					String userName = userListModel.get(userList.getSelectedIndex());						
+					String userName = userListModel.get(userList.getSelectedIndex());
 					
 					if(userList.getSelectedIndex() == 0) {	
 						userName = userName.substring(0, userName.length() - 4);
@@ -306,8 +310,7 @@ public class ProjectClient extends JFrame {
 		});
 		exitButton.setBounds(361, 7, 198, 33);
 		chattingRoomPanel.add(exitButton);
-		
-		
+				
 		/*<보낼사람 선택>*/
 		sendListLabel = new JLabel();
 		sendListLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
