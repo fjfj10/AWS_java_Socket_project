@@ -1,47 +1,36 @@
 package socket_project_client;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
-import java.awt.Label;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.Objects;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.DefaultCaret;
-
-import socket_project_client.dto.RequestBodyDto;
-import socket_project_client.dto.SendMessage;
-import socket_project_client.renderer.ClientNameBoldRenderer;
-import lombok.Getter;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Objects;
+
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
+
+import lombok.Getter;
+import socket_project_client.dto.RequestBodyDto;
+import socket_project_client.dto.SendMessage;
+import socket_project_client.renderer.ClientNameBoldRenderer;
 
 @Getter
 public class ProjectClient extends JFrame {
@@ -168,6 +157,7 @@ public class ProjectClient extends JFrame {
 				mainCardLayout.show(mainCardPanel, "chattingRoomPanel");
 				requestBodyDto = new RequestBodyDto<String>("join", roomName);
 				ClientSender.getInstance().send(requestBodyDto);
+				messageTextField.requestFocus();
 			}			
 		});
 		chattingRoomListPanel.add(createRoomButton);
@@ -189,6 +179,8 @@ public class ProjectClient extends JFrame {
 					mainCardLayout.show(mainCardPanel, "chattingRoomPanel");
 					RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("join", roomName);
 					ClientSender.getInstance().send(requestBodyDto);
+					
+					messageTextField.requestFocus();
 				}
 			}
 		});
@@ -215,7 +207,6 @@ public class ProjectClient extends JFrame {
 		searchRoomTextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				searchRoomTextField.requestFocus();
 				RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("getRoomNameList", username);
 				ClientSender.getInstance().send(requestBodyDto);
 			}
@@ -316,10 +307,5 @@ public class ProjectClient extends JFrame {
 		sendListLabel.setBounds(12, 486, 80, 49);
 		chattingRoomPanel.add(sendListLabel);
 		
-		
-		
 	}
-
-
-	
 }
