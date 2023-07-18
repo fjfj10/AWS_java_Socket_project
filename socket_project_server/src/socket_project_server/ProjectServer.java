@@ -11,7 +11,7 @@ import socket_project_server.entity.Room;
 public class ProjectServer {
 
 	public static List<ConnectedSocket> connectedSocketList = new ArrayList<>();
-	public static List<Room> roomList = new ArrayList<>();
+	public static List<Room> roomList = new ArrayList<>();           //roomList= 방들이 저장되는 리스트
 	
 	
 	public static void main(String[] args) {
