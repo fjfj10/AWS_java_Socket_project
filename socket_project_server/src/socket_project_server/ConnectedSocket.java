@@ -141,6 +141,7 @@ public class ConnectedSocket extends Thread {
 	 */
 	private void join(String requestBody) {
 		String roomName = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+		//메소드로 분리하기
 		ProjectServer.roomList.forEach(room -> {
 
 			if (room.getRoomName().equals(roomName)) {
@@ -161,7 +162,13 @@ public class ConnectedSocket extends Thread {
 			}
 		});
 	}
-
+	//위의 메소드 분리해두기
+	private void sendJionandleaveRoomMessage(Room room, String message) {
+		
+	}
+	private void updateJoinUserList(Room room) {
+		
+	}
 	private void sendMessage(String requestBody) {
 		TypeToken<RequestBodyDto<SendMessage>> typeToken = new TypeToken<RequestBodyDto<SendMessage>>() {
 		};
