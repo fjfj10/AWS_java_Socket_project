@@ -109,12 +109,9 @@ public class ClientReceiver extends Thread{
 	private void leave(String requestBody) {
 		ProjectClient projectClient = ProjectClient.getInstance();
 		projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
-<<<<<<< HEAD
-		ProjectClient.getInstance().getMessageTextField().setText("");
-		ProjectClient.getInstance().getChattingTextArea().setText("");
-=======
+
 		ProjectClient.getInstance().getChattingTextArea().setText("");	//지금은 나갈때 TextArea를 초가화함 -> 들어갈때 해줘도 상관X
 		ProjectClient.getInstance().getMessageTextField().setText("");
->>>>>>> parent of 6ce7550 (Revert "comment: 주석 추가 및 띄워쓰기 변경")
+
 	}
 }
