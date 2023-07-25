@@ -98,15 +98,16 @@ public class ProjectClient extends JFrame {
 
 	public ProjectClient() {
 		username = JOptionPane.showInputDialog(chattingRoomPanel, "ID를 입력하세요");							
-		//반복돌려주기 while 사용
-		if(Objects.isNull(username)) {// X눌렀을때
-			System.exit(0);
-		}
-		if(username.isBlank()) {//빈칸일때
-			System.exit(0);
+		while (true) {			
+			if(Objects.isNull(username)) {// X눌렀을때
+				System.exit(0);
+			}
+			if(!username.isBlank()) {//빈칸일때
+				break;
+			}			
 		}
 		try {
-			socket = new Socket("127.0.0.1", 8000); //127.0.0.1 = 본인 IP        
+			socket = new Socket("127.0.0.1", 8000);       
 			
 			
 		} catch (IOException e) {
@@ -138,7 +139,6 @@ public class ProjectClient extends JFrame {
 		createRoomButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				//반복 돌려주기(취소하지 않는이상 계속 받을수있도록)
 				String roomName = JOptionPane.showInputDialog(chattingRoomListPanel, "방제목을 입력하세요.");
 				if(Objects.isNull(roomName)) {
 					return;
@@ -191,7 +191,7 @@ public class ProjectClient extends JFrame {
 		
 		/*<Label에 Client 본인의 이름표시>*/
 		clientNameLabel = new JLabel();
-		clientNameLabel.setBounds(361, 5, 133, 65);
+		clientNameLabel.setBounds(137, 10, 353, 27);
 		clientNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		chattingRoomListPanel.add(clientNameLabel);
@@ -207,6 +207,7 @@ public class ProjectClient extends JFrame {
 		userImageLabel.setIcon(imageIcon);
 		chattingRoomListPanel.add(userImageLabel);
 		
+		/*<방 검색 기능>*/
 		searchRoomTextField = new JTextField();
 		searchRoomTextField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -215,9 +216,13 @@ public class ProjectClient extends JFrame {
 				ClientSender.getInstance().send(requestBodyDto);
 			}
 		});
-		searchRoomTextField.setBounds(123, 5, 226, 57);
+		searchRoomTextField.setBounds(194, 37, 296, 27);
 		chattingRoomListPanel.add(searchRoomTextField);
 		searchRoomTextField.setColumns(10);
+		JLabel searchRoomLabel = new JLabel();
+		searchRoomLabel.setText("방 검색: ");
+		searchRoomLabel.setBounds(135, 40, 57, 20);
+		chattingRoomListPanel.add(searchRoomLabel);
 		
 		
 		/*<<chattingRoomPanel 생성>>*/

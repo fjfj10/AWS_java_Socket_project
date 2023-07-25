@@ -71,8 +71,7 @@ public class ClientReceiver extends Thread{
 //		if(isUsernameDuplicated == true) ->  if(isUsernameDuplicated) 논리형일때 == 쓰지말기
 		if(isUsernameDuplicated) { //if문에 논리형을 넣으면 true일때만 if문 안의 명령을 실행함. false는 else 안의 명령 실행
 			JOptionPane.showMessageDialog(null, "중복된 ID입니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
-			//나가지말고 다시 ID입력창을 띄울수 있나?
-			System.exit(0);
+			return;
 		}else {
 			JOptionPane.showMessageDialog(null, "사용 가능한 ID입니다.", "", JOptionPane.PLAIN_MESSAGE);
 			
@@ -80,9 +79,14 @@ public class ClientReceiver extends Thread{
 	}
 	
 	private void updateRoomList(String requestBody) {
+		//searchCondition는 roomNameList를 Json으로 받음
 		String searchCondition = ProjectClient.getInstance().getSearchRoomTextField().getText();
 		List<String> roomList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
-		
+		/*검색 조건(searchCondition)이 비어있지 않으면(equals("")), 방 목록을 해당 검색 조건으로 필터링 
+		 * stream()을 사용하여 방 목록을 스트림으로 변환한 후, 
+		 * filter()를 사용하여 검색 조건을 만족하는 방들로 필터링
+		 * collect()를 사용하여 필터링된 방들을 다시 List로 변환
+		 * 마지막으로, 프로젝트 클라이언트의 방 목록 모델을 업데이트*/ 
 		if(!searchCondition.equals("")) {
 			roomList = roomList.stream().filter((room) -> {
 				return room.contains(searchCondition);
@@ -110,8 +114,8 @@ public class ClientReceiver extends Thread{
 		ProjectClient projectClient = ProjectClient.getInstance();
 		projectClient.getMainCardLayout().show(projectClient.getMainCardPanel(), "chattingRoomListPanel");
 
-		ProjectClient.getInstance().getChattingTextArea().setText("");	//지금은 나갈때 TextArea를 초가화함 -> 들어갈때 해줘도 상관X
-		ProjectClient.getInstance().getMessageTextField().setText("");
+		ProjectClient.getInstance().getChattingTextArea().setText("");	//지금은 나갈때 TextArea를 초기화함 -> 들어갈때 해줘도 상관X
+		ProjectClient.getInstance().getMessageTextField().setText("");	//방에서 나가면 MessageTextField 초기화 -> 들어갈때 해줘도 상관X
 
 	}
 }
